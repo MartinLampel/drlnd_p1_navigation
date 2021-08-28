@@ -3,12 +3,13 @@
 [image1]: ./img/m_64_32_085.png "Model 1"
 [image2]: ./img/m_126_64_32.png "Model 2"
 [image3]: ./img/m_256_32.png "Model 3"
-[image4]: ./img/m_64_32_09.png "Model 4"
-[image5]: ./img/m_64_32_095.png "Model 5"
+[image4]: ./img/m64_32_09.png "Model 4"
+[image5]: ./img/m64_32_095.png "Model 5"
 
 # Project 1: Navigation
 
 ### Introduction
+
 
 For this project, you will train an agent to navigate (and collect bananas!) in a large, square world.  
 
@@ -56,15 +57,85 @@ To find the optimal action-value function during the training following loss fun
 - <a href="https://www.codecogs.com/eqnedit.php?latex=\gamma" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma" title="\gamma" /></a> discount factor
 
 
+### Implementation
 
+In the file dqnagent.py the agent is implemented. It is based on the Agent from course.
+The model.py implements the QNetwork class which is utilized by the agent. This class
+is modified to support any number of hidden layers.
 
 
 
 ### Models
 
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
+There are 5 models with different number of hidden layers and Ɛ tested.
+Each architecture uses fully connected layers as hidden layers. After each hidden
+layer the ReLu function is applied.
 
+| Model | Architecture         		|     Ɛ	        					| 
+|:---------------------:|:---------------------:|:---------------------------------------------:| 
+| 1| 37->64->32->4 | 0.85 |
+| 2| 37->128->64->32->4| 0.85 |
+| 3| 37->256->32->4 | 0.85 |
+| 4| 37->64->32->4 | 0.95 |
+| 5| 37->64->32->4 | 0.9 |
 
 ### Results
 
+#### Model 1
+
+| Episode         		|     Average Score	        					|
+|:---------------------:|:---------------------:|
+| 100	| 1.83 |
+| 200	| 7.00 |
+| 300	| 12.13 |
+| 329	| 13.05 |
+
+
+![alt text][image1]
+
+#### Model 2
+
+
+| Episode         		|     Average Score	        					|
+|:---------------------:|:---------------------:|
+| 100	| 0.87|
+| 200	| 6.63|
+| 300	| 9.16 |
+| 384		| 13.01 |
+
+![alt text][image2]
+
+#### Model 3
+
+
+| Episode         		|     Average Score	        					|
+|:---------------------:|:---------------------:|
+| 100	| 2.23 |
+| 200	| 6.67 |
+| 300	| 10.9 |
+| 382		| 13.09|
+
+![alt text][image3]
+
+#### Model 4
+
+
+| Episode         		|     Average Score	        					|
+|:---------------------:|:---------------------:|
+| 100	| 2.32 |
+| 200	| 9.02 |
+| 300	| 12.69 |
+| 305		| 13.02|
+
+![alt text][image4]
+
+#### Model 5
+
+| Episode         		|     Average Score	        					|
+|:---------------------:|:---------------------:|
+| 100	| 2.38 |
+| 200	| 8.35 |
+| 300	| 10.86 |
+| 355		| 13.08|
+
+![alt text][image5]
