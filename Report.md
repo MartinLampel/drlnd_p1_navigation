@@ -1,10 +1,10 @@
 [//]: # (Image References)
 
-[image1]: ./img/m_64_32_085.png "Model 1"
-[image2]: ./img/m_126_64_32.png "Model 2"
-[image3]: ./img/m_256_32.png "Model 3"
-[image4]: ./img/m64_32_09.png "Model 4"
-[image5]: ./img/m64_32_095.png "Model 5"
+[image1]: ./img/m1.png "Model 1"
+[image2]: ./img/m2.png "Model 2"
+[image3]: ./img/m3.png "Model 3"
+[image4]: ./img/m4.png "Model 4"
+[image5]: ./img/m5.png "Model 5"
 [image6]: ./img/dqn.png "DQN algorithm"
 # Project 1: Navigation
 
@@ -82,72 +82,65 @@ layer the ReLu function is applied.
 
 | Model | Architecture         		|     Ɛ	        					| 
 |:---------------------:|:---------------------:|:---------------------------------------------:| 
-| 1| 37->64->32->4 | 0.85 |
-| 2| 37->128->64->32->4| 0.85 |
-| 3| 37->256->32->4 | 0.85 |
-| 4| 37->64->32->4 | 0.95 |
-| 5| 37->64->32->4 | 0.9 |
+| 1| 37->64->32->4 | 0.9975 |
+| 2| 37->128->64->16->4| 0.9975 |
+| 3| 37->256->128->32->4 | 0.9975 |
+| 4| 37->128->64->16->4 | 0.95 |
+| 5| 37->64->32->4 | 0.95 |
 
 ## Results
 
-### Model 1
 
-| Episode         		|     Average Score	        					|
+For each Agent, the score over the episodes is recorded. Each Agent can solve the task in less than 1000 episodes. 
+The number of episodes for the models are not far apart for the same Ɛ. From the first 3 models model 1 and 2 with
+a Ɛ of 0.95 trained. By reducing Ɛ from 0.9975 to 0.95 the two agents learn a lot faster and can solve the task in 315 or
+233 episodes. By reducing Ɛ the agents explore the environment less. 
+
+The following table shows the episodes when an agent has solved the task:
+| Model | Episodes         		|    
 |:---------------------:|:---------------------:|
-| 100	| 1.83 |
-| 200	| 7.00 |
-| 300	| 12.13 |
-| 329	| 13.05 |
+| 1| 794 | 
+| 2| 743 | 
+| 3| 761 | 
+| 4| 315  | 
+| 5| 233 | 
 
+
+Deep Reinforcement Learning nature is very volatile, as the results show, the ups                         
+and downs are very present during the whole training. 
+
+
+
+### Model 1
 
 ![alt text][image1]
 
 ### Model 2
 
-
-| Episode         		|     Average Score	        					|
-|:---------------------:|:---------------------:|
-| 100	| 0.87|
-| 200	| 6.63|
-| 300	| 9.16 |
-| 384		| 13.01 |
-
 ![alt text][image2]
 
 ### Model 3
-
-
-| Episode         		|     Average Score	        					|
-|:---------------------:|:---------------------:|
-| 100	| 2.23 |
-| 200	| 6.67 |
-| 300	| 10.9 |
-| 382		| 13.09|
 
 ![alt text][image3]
 
 ### Model 4
 
-
-| Episode         		|     Average Score	        					|
-|:---------------------:|:---------------------:|
-| 100	| 2.32 |
-| 200	| 9.02 |
-| 300	| 12.69 |
-| 305		| 13.02|
-
 ![alt text][image4]
 
 ### Model 5
 
-| Episode         		|     Average Score	        					|
-|:---------------------:|:---------------------:|
-| 100	| 2.38 |
-| 200	| 8.35 |
-| 300	| 10.86 |
-| 355		| 13.08|
-
 ![alt text][image5]
+
+## Ideas for Future Work
+
+To improve the stability of the reinforcement learning algorithm methods                          
+like Experience Replay, target update in fixed intervals, soft update of weights was used. 
+
+There are follow ideas:
+* more training runs with different seeds and epsilon
+* Implementation of Dueling Networks, Multi-Step Learning and Distributional RL. Combining these with the                     
+  used algorithm yields the Rainbow
+
 
 
 ## References
