@@ -58,6 +58,14 @@ To find the optimal action-value function during the training following loss fun
 
 ![alt text][image6]
 
+
+Instead of applying a hard update of weights of the target network as proposed in the paper, a soft update is used:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;\theta^-&space;\leftarrow&space;(1-\tau)\theta^-&space;&plus;&space;\tau&space;\theta" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;\theta^-&space;\leftarrow&space;(1-\tau)\theta^-&space;&plus;&space;\tau&space;\theta" title="\theta^- \leftarrow (1-\tau)\theta^- + \tau \theta" /></a>
+
+The weights of these target networks are then updated by having them slowly track the learned networks: θ⁻←τθ+(1−τ)θ⁻ with τ<<1. This means that the target values are constrained to change slowly, greatly improving the stability of learning[2].
+
+
 ### Implementation
 
 In the file dqnagent.py the agent is implemented. It is based on the Agent from course.
@@ -145,3 +153,4 @@ layer the ReLu function is applied.
 ## References
 
 * [1] Mnih, V., Kavukcuoglu, K., Silver, D. et al. Human-level control through deep reinforcement learning. Nature 518, 529–533 (2015). https://doi.org/10.1038/nature14236
+* [2] Timothy P. Lillicrap, Jonathan J. Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver, Daan Wierstra. Continuous control with deep reinforcement learning. https://arxiv.org/abs/1509.02971
