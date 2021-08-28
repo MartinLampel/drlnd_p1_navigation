@@ -1,6 +1,10 @@
 [//]: # (Image References)
 
-[image1]: https://user-images.githubusercontent.com/10624937/42135619-d90f2f28-7d12-11e8-8823-82b970a54d7e.gif "Trained Agent"
+[image1]: ./img/m_64_32_085.png "Model 1"
+[image2]: ./img/m_126_64_32.png "Model 2"
+[image3]: ./img/m_256_32.png "Model 3"
+[image4]: ./img/m_64_32_09.png "Model 4"
+[image5]: ./img/m_64_32_095.png "Model 5"
 
 # Project 1: Navigation
 
@@ -8,48 +12,59 @@
 
 For this project, you will train an agent to navigate (and collect bananas!) in a large, square world.  
 
-![Trained Agent][image1]
 
-A reward of +1 is provided for collecting a yellow banana, and a reward of -1 is provided for collecting a blue banana.  Thus, the goal of your agent is to collect as many yellow bananas as possible while avoiding blue bananas.  
+### Project Structure
 
-The state space has 37 dimensions and contains the agent's velocity, along with ray-based perception of objects around agent's forward direction.  Given this information, the agent has to learn how to best select actions.  Four discrete actions are available, corresponding to:
-- **`0`** - move forward.
-- **`1`** - move backward.
-- **`2`** - turn left.
-- **`3`** - turn right.
+The code is written in PyTorch and Python3, executed in Jupyter Notebook
+- Navigation.ipynb	: Training and evaluation of different agents
+- dqnagent.py	: Agent and ReplayBuffer Class
+- model.py	: Build QNetwork and train function
+- model1.pth : Saved Model Weights
 
-The task is episodic, and in order to solve the environment, your agent must get an average score of +13 over 100 consecutive episodes.
 
-### Getting Started
+### Environment
 
-1. Download the environment from one of the links below.  You need only select the environment that matches your operating system:
-    - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux.zip)
-    - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana.app.zip)
-    - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86.zip)
-    - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86_64.zip)
-    
-    (_For Windows users_) Check out [this link](https://support.microsoft.com/en-us/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64) if you need help with determining if your computer is running a 32-bit version or 64-bit version of the Windows operating system.
+In this task the agent should maximize the reward by collecting 
+yellow bananas and avoiding blue bananas. The environment is implementedwith Unity. 
 
-    (_For AWS_) If you'd like to train the agent on AWS (and have not [enabled a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md)), then please use [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux_NoVis.zip) to obtain the environment.
+The state space has 37 dimensions and contains the agent's velocity, along with ray-based perception of objects around agent's forward direction.
+THe agent can take four actions:
+- Walk forward 
+- Walk backward
+- turn left
+- turn right
 
-2. Place the file in the DRLND GitHub repository, in the `p1_navigation/` folder, and unzip (or decompress) the file. 
+In order to solve the environment, the agent must get an average score of +13 over 100 consecutive episodes.
 
-### Instructions
+### Learning Algorithm
 
-Follow the instructions in `Navigation.ipynb` to get started with training your own agent!  
+Q learning is a value-based Reinforcement Learning algorithm to learn the value of an action in a particular state.
+The goal of Q learning is to find an optimal policy which maximizes the reward over all successive steps. 
 
-### (Optional) Challenge: Learning from Pixels
+<img src="https://latex.codecogs.com/gif.latex?\mathit{Q}^{*}(s,&space;a)&space;=&space;\underset{\pi}{\mathrm{max}}\&space;\mathbb{E}&space;\left&space;[&space;r_{t}&space;&plus;&space;\gamma&space;r_{t&plus;1}&space;&plus;&space;\gamma&space;^{2}&space;r_{t&plus;2}&plus;...|s_{t}=s,&space;a_{t}=a,&space;\pi&space;\right&space;]" title="\mathit{Q}^{*}(s, a) = \underset{\pi}{\mathrm{max}}\ \mathbb{E} \left [ r_{t} + \gamma r_{t+1} + \gamma ^{2} r_{t+2}+...|s_{t}=s, a_{t}=a, \pi \right ]" />
 
-After you have successfully completed the project, if you're looking for an additional challenge, you have come to the right place!  In the project, your agent learned from information such as its velocity, along with ray-based perception of objects around its forward direction.  A more challenging task would be to learn directly from pixels!
+To approximate the optimal action-value function a neural network was used. The usage of neural networks can lead that the reinforcement learning is unstable or
+diverge. To overcome this issue, a nature inspired mechanism, namely experience replay was used in 'Human-level control through deep reinforcement
+learning'. This approach randomizes over data and remove correlations. The second concept to address these issues was to update the target action-value function periodically to reduce correlations.
 
-To solve this harder task, you'll need to download a new Unity environment.  This environment is almost identical to the project environment, where the only difference is that the state is an 84 x 84 RGB image, corresponding to the agent's first-person view.  (**Note**: Udacity students should not submit a project with this new environment.)
+To find the optimal action-value function during the training following loss function is used:
 
-You need only select the environment that matches your operating system:
-- Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/VisualBanana_Linux.zip)
-- Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/VisualBanana.app.zip)
-- Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/VisualBanana_Windows_x86.zip)
-- Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/VisualBanana_Windows_x86_64.zip)
+<a href="https://www.codecogs.com/eqnedit.php?latex=L_i{(\theta)&space;=&space;\mathrm{E_{\mathit{s,a,r,s^{'}&space;D}}}\left&space;[&space;\left&space;(r&space;&plus;&space;\gamma&space;\underset{a^{'}}{\mathrm{max}}Q(s^{'},a^{'};,\theta^-_i)&space;-&space;Q(s,a;\theta_i)\right&space;)^{2}&space;\right&space;]&space;}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?L_i{(\theta)&space;=&space;\mathrm{E_{\mathit{s,a,r,s^{'}&space;D}}}\left&space;[&space;\left&space;(r&space;&plus;&space;\gamma&space;\underset{a^{'}}{\mathrm{max}}Q(s^{'},a^{'};,\theta^-_i)&space;-&space;Q(s,a;\theta_i)\right&space;)^{2}&space;\right&space;]&space;}" title="L_i{(\theta) = \mathrm{E_{\mathit{s,a,r,s^{'} D}}}\left [ \left (r + \gamma \underset{a^{'}}{\mathrm{max}}Q(s^{'},a^{'};,\theta^-_i) - Q(s,a;\theta_i)\right )^{2} \right ] }" /></a>
 
-Then, place the file in the `p1_navigation/` folder in the DRLND GitHub repository, and unzip (or decompress) the file.  Next, open `Navigation_Pixels.ipynb` and follow the instructions to learn how to use the Python API to control the agent.
+- <a href="https://www.codecogs.com/eqnedit.php?latex=\theta^-_i" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\theta^-_i" title="\theta^-_i" /></a> parameters of the target network. updated every C steps
+- <a href="https://www.codecogs.com/eqnedit.php?latex=\theta_i" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\theta_i" title="\theta_i" /></a> network parameters at iteration i
+- <a href="https://www.codecogs.com/eqnedit.php?latex=\gamma" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma" title="\gamma" /></a> discount factor
 
-(_For AWS_) If you'd like to train the agent on AWS, you must follow the instructions to [set up X Server](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md), and then download the environment for the **Linux** operating system above.
+
+
+
+
+
+### Models
+
+| Layer         		|     Description	        					| 
+|:---------------------:|:---------------------------------------------:| 
+
+
+### Results
+
