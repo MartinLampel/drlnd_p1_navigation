@@ -5,10 +5,10 @@
 [image3]: ./img/m_256_32.png "Model 3"
 [image4]: ./img/m64_32_09.png "Model 4"
 [image5]: ./img/m64_32_095.png "Model 5"
-
+[image6]: ./img/dqn.png "DQN algorithm"
 # Project 1: Navigation
 
-### Introduction
+## Introduction
 
 
 For this project, you will train an agent to navigate (and collect bananas!) in a large, square world.  
@@ -37,7 +37,7 @@ THe agent can take four actions:
 
 In order to solve the environment, the agent must get an average score of +13 over 100 consecutive episodes.
 
-### Learning Algorithm
+## Learning Algorithm
 
 Q learning is a value-based Reinforcement Learning algorithm to learn the value of an action in a particular state.
 The goal of Q learning is to find an optimal policy which maximizes the reward over all successive steps. 
@@ -56,6 +56,7 @@ To find the optimal action-value function during the training following loss fun
 - <a href="https://www.codecogs.com/eqnedit.php?latex=\theta_i" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\theta_i" title="\theta_i" /></a> network parameters at iteration i
 - <a href="https://www.codecogs.com/eqnedit.php?latex=\gamma" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma" title="\gamma" /></a> discount factor
 
+![alt text][image6]
 
 ### Implementation
 
@@ -79,9 +80,9 @@ layer the ReLu function is applied.
 | 4| 37->64->32->4 | 0.95 |
 | 5| 37->64->32->4 | 0.9 |
 
-### Results
+## Results
 
-#### Model 1
+### Model 1
 
 | Episode         		|     Average Score	        					|
 |:---------------------:|:---------------------:|
@@ -93,7 +94,7 @@ layer the ReLu function is applied.
 
 ![alt text][image1]
 
-#### Model 2
+### Model 2
 
 
 | Episode         		|     Average Score	        					|
@@ -105,7 +106,7 @@ layer the ReLu function is applied.
 
 ![alt text][image2]
 
-#### Model 3
+### Model 3
 
 
 | Episode         		|     Average Score	        					|
@@ -117,7 +118,7 @@ layer the ReLu function is applied.
 
 ![alt text][image3]
 
-#### Model 4
+### Model 4
 
 
 | Episode         		|     Average Score	        					|
@@ -129,7 +130,7 @@ layer the ReLu function is applied.
 
 ![alt text][image4]
 
-#### Model 5
+### Model 5
 
 | Episode         		|     Average Score	        					|
 |:---------------------:|:---------------------:|
@@ -139,3 +140,8 @@ layer the ReLu function is applied.
 | 355		| 13.08|
 
 ![alt text][image5]
+
+
+## References
+
+* [1] Mnih, V., Kavukcuoglu, K., Silver, D. et al. Human-level control through deep reinforcement learning. Nature 518, 529–533 (2015). https://doi.org/10.1038/nature14236
