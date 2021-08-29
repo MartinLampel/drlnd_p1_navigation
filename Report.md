@@ -46,7 +46,11 @@ The goal of Q learning is to find an optimal policy which maximizes the reward o
 
 To approximate the optimal action-value function a neural network was used. The usage of neural networks can lead that the reinforcement learning is unstable or
 diverge. To overcome this issue, a nature inspired mechanism, namely experience replay was used in 'Human-level control through deep reinforcement
-learning'. The second concept to address these issues was to update the target action-value function periodically to reduce correlations.
+learning'. Each experience is stored in a replay buffer as the agent interacts with the environment. The replay buffer contains a collection of experience tuples with the state, action, reward, and next state (s, a, r, s'). The agent then samples from this buffer as part of the learning step. Experiences are sampled randomly, so that the data is uncorrelated. This prevents action values from oscillating or diverging catastrophically, since a naive Q-learning algorithm could otherwise become biased by correlations between sequential experience tuples.
+
+Also, experience replay improves learning through repetition. By doing multiple passes over the data, our agent has multiple opportunities to learn from a single experience tuple. This is particularly useful for state-action pairs that occur infrequently within the environment. 
+
+The second concept to address these issues was to update the target action-value function periodically to reduce correlations.
 
 To find the optimal action-value function during the training following loss function is used:
 
@@ -57,10 +61,6 @@ To find the optimal action-value function during the training following loss fun
 - <a href="https://www.codecogs.com/eqnedit.php?latex=\gamma" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma" title="\gamma" /></a> discount factor
 
 ![alt text][image6]
-
-Each experience is stored in a replay buffer as the agent interacts with the environment. The replay buffer contains a collection of experience tuples with the state, action, reward, and next state (s, a, r, s'). The agent then samples from this buffer as part of the learning step. Experiences are sampled randomly, so that the data is uncorrelated. This prevents action values from oscillating or diverging catastrophically, since a naive Q-learning algorithm could otherwise become biased by correlations between sequential experience tuples.
-
-Also, experience replay improves learning through repetition. By doing multiple passes over the data, our agent has multiple opportunities to learn from a single experience tuple. This is particularly useful for state-action pairs that occur infrequently within the environment.
 
 
 Instead of applying a hard update of weights of the target network as proposed in the paper, a soft update is used:
@@ -82,7 +82,7 @@ is modified to support any number of hidden layers.
 
 There are 5 models with different number of hidden layers and Ɛ tested.
 Each architecture uses fully connected layers as hidden layers. After each hidden
-layer the ReLu function is applied.
+layer the ReLu function is applied. The input to the neural network is the state vector 
 
 | Model | Architecture         		|     Ɛ	        					| 
 |:---------------------:|:---------------------:|:---------------------------------------------:| 
@@ -144,10 +144,11 @@ There are follow ideas:
 * more training runs with different seeds and epsilon
 * Implement the remaining improvements from rainbow, namely Dueling DQN, Noisy DQN, A3C, Distributional DQN
 * Test the agent in the unity environment
-
+* Replace conventional exploration heuristics with Noisy DQN — This approach is explained here in this research paper. The key takeaway is that parametric noise is added  to the weights to induce stochasticity to the agent's policy, yielding more efficient exploration[3].
 
 
 ## References
 
 * [1] Mnih, V., Kavukcuoglu, K., Silver, D. et al. Human-level control through deep reinforcement learning. Nature 518, 529–533 (2015). https://doi.org/10.1038/nature14236
 * [2] Timothy P. Lillicrap, Jonathan J. Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver, Daan Wierstra. Continuous control with deep reinforcement learning. https://arxiv.org/abs/1509.02971
+* [3] Meire Fortunato and Mohammad Gheshlaghi Azar and Bilal Piot and Jacob Menick and Ian Osband and Alex Graves and Vlad Mnih and Remi Munos and Demis Hassabis and Olivier Pietquin and Charles Blundell and Shane Legg. Noisy Networks for Exploration. https://arxiv.org/abs/1706.10295
