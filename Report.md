@@ -75,7 +75,11 @@ The agent implements the Epsilon greedy algorithm to handle the exploration vs e
 The challenge with the Q-function is to choosing the action to take while the agent is still learning the policy. 
 One challenge with the Q-function above is choosing which action to take while the agent is still learning the optimal policy. Should the agent choose an action based on the Q-values observed thus far? Or, should the agent try a new action in hopes of earning a higher reward? 
 
-To address this, I implemented an 𝛆-greedy algorithm. This algorithm allows the agent to systematically manage the exploration vs. exploitation trade-off. The agent "explores" by picking a random action with some probability epsilon 𝛜. However, the agent continues to "exploit" its knowledge of the environment by choosing actions based on the policy with probability (1-𝛜).
+To address this, in the agent an 𝛆-greedy algorithm is implemented. This algorithm allows the agent to systematically manage the exploration vs. exploitation trade-off. 
+The agent pick the action in follow manner:
+* picking a random action with probability  𝛜 -> exploration
+* choose action based on the policy with probability (1- 𝛜) -> exploit its knowledge of the environment
+
 
 Furthermore, the value of epsilon is purposely decayed over time, so that the agent favors exploration during its initial interactions with the environment, but increasingly favors exploitation as it gains more experience. 
 
