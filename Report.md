@@ -46,7 +46,7 @@ The goal of Q learning is to find an optimal policy which maximizes the reward o
 
 To approximate the optimal action-value function a neural network was used. The usage of neural networks can lead that the reinforcement learning is unstable or
 diverge. To overcome this issue, a nature inspired mechanism, namely experience replay was used in 'Human-level control through deep reinforcement
-learning'. This approach randomizes over data and remove correlations. The second concept to address these issues was to update the target action-value function periodically to reduce correlations.
+learning'. The second concept to address these issues was to update the target action-value function periodically to reduce correlations.
 
 To find the optimal action-value function during the training following loss function is used:
 
@@ -57,6 +57,10 @@ To find the optimal action-value function during the training following loss fun
 - <a href="https://www.codecogs.com/eqnedit.php?latex=\gamma" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma" title="\gamma" /></a> discount factor
 
 ![alt text][image6]
+
+Each experience is stored in a replay buffer as the agent interacts with the environment. The replay buffer contains a collection of experience tuples with the state, action, reward, and next state (s, a, r, s'). The agent then samples from this buffer as part of the learning step. Experiences are sampled randomly, so that the data is uncorrelated. This prevents action values from oscillating or diverging catastrophically, since a naive Q-learning algorithm could otherwise become biased by correlations between sequential experience tuples.
+
+Also, experience replay improves learning through repetition. By doing multiple passes over the data, our agent has multiple opportunities to learn from a single experience tuple. This is particularly useful for state-action pairs that occur infrequently within the environment.
 
 
 Instead of applying a hard update of weights of the target network as proposed in the paper, a soft update is used:
