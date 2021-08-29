@@ -89,7 +89,26 @@ In the file dqnagent.py the agent is implemented. It is based on the Agent from 
 The model.py implements the QNetwork class which is utilized by the agent. This class
 is modified to support any number of hidden layers.
 
+### Hyperparameters
 
+In this section the hyperparameters of the agent and training are described. 
+
+Agent hyperparameters
+
+* BUFFER_SIZE = int(1e5)  # replay buffer size
+* BATCH_SIZE = 64         # minibatch size
+* GAMMA = 0.99            # discount factor
+* TAU = 1e-3              # for soft update of target parameters
+* LR = 5e-4               # learning rate 
+* UPDATE_EVERY = 4        # how often to update the network
+
+Training Hyperparameters
+
+* n_episodes = 2000   # maximum number of iterations
+* max_t = 1000        # maximum number of time steps in one episode
+* eps_start = 1.0     # epsilon value for e-greedy heuristic (exploration)
+* eps_end = 0.025     # final value for epsilon
+* eps_decay= 0.9975   # decay factor for epsilon
 
 ### Models
 
@@ -114,6 +133,7 @@ a Ɛ of 0.95 trained. By reducing Ɛ from 0.9975 to 0.95 the two agents learn a 
 233 episodes. By reducing Ɛ the agents explore the environment less. 
 
 The following table shows the episodes when an agent has solved the task:
+
 | Model | Episodes         		|    
 |:---------------------:|:---------------------:|
 | 1| 794 | 
