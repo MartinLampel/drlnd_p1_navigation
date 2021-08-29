@@ -138,8 +138,8 @@ like Experience Replay, target update in fixed intervals, soft update of weights
 
 There are follow ideas:
 * more training runs with different seeds and epsilon
-* Implementation of Dueling Networks, Multi-Step Learning and Distributional RL. Combining these with the                     
-  used algorithm yields the Rainbow
+* Implement the remaining improvements from rainbow, namely Dueling DQN, Noisy DQN, A3C, Distributional DQN
+* Test the agent in the unity environment
 
 
 
